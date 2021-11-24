@@ -1,0 +1,43 @@
+require('dotenv').config()
+const express = require('express')
+const mongoose = require('mongoose')
+const morgan = require('morgan')
+const app = express()
+
+const route = require('./routes/admin/admin')
+const userRoute = require('./routes/user/user')
+const categoryRoute = require('./routes/category/category')
+const productRoute = require('./routes/product/product')
+const cartRoute = require('./routes/cart/cart')
+const wishlistRoute = require('./routes/wishlist/wishlist')
+const inventoryRoute = require('./routes/inventory/inventory')
+const addressRoute = require('./routes/address/address')
+const shipperRoute = require('./routes/shipper/shipper')
+const orderRoute = require('./routes/order/order')
+const paymentRoute = require('./routes/payment/payment')
+const availabilityRoute = require('./routes/shipperAvailability/shipperAvailability')
+
+app.use(express.json())
+app.use(morgan('dev'))
+app.use('/',route)
+app.use('/',userRoute)
+app.use('/',categoryRoute)
+app.use('/',productRoute)
+app.use('/',cartRoute)
+app.use('/',wishlistRoute)
+app.use('/',inventoryRoute)
+app.use('/',addressRoute)
+app.use('/',shipperRoute)
+app.use('/',orderRoute)
+app.use('/',paymentRoute)
+app.use('/',availabilityRoute)
+
+
+mongoose.connect(process.env.dbSecretKey,{})
+.then(()=> console.log("Connected with mongoDb"))
+.catch((err)=>console.log(err))
+
+const server = app.listen(9000,()=>{
+    console.log("Server running at http://localhost:9000")
+})
+
